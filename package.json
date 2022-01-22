@@ -1,0 +1,6 @@
+{
+  "scripts": {
+  "postinstall": "cd client; npm install --production=false",
+  "build": "cd client; npm run build"
+  }
+}
