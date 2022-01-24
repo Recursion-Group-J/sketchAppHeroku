@@ -1,11 +1,30 @@
 <template>
-  <div id="nav">
+  <div>
+    <TheNavigator></TheNavigator>
+    <!-- <Home></Home> -->
+    <!-- <SketchPage></SketchPage> -->
+  </div>
+  <!-- <div id="nav">
     <router-link to="/">Home</router-link> |
     <router-link to="/about">About</router-link> |
     <router-link to="/sketch">Sketch</router-link>
-  </div>
+    </div> -->
   <router-view/>
 </template>
+
+<script>
+// import SketchPage from '@/views/Sketchpage.vue'
+import TheNavigator from '@/components/TheNavigator.vue'
+// import Home from '@/views/Home.vue'
+
+export default {
+    components: {
+        // Home,
+        // SketchPage,
+        TheNavigator
+    }
+}
+</script>
 
 <style>
 #app {
