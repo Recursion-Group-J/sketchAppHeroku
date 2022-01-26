@@ -6,7 +6,7 @@ from . import views
 router = routers.DefaultRouter()
 router.register('works',views.WorkViewSet)
 
-url_patterns = [
+urlpatterns = [
     path('', include(router.urls))
 ]
 

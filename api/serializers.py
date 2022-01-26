@@ -6,4 +6,4 @@ class WorkSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Work
-        # fields = '__all__'
+        fields = ['uuid','name','work','user']
