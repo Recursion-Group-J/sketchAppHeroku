@@ -10,6 +10,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.0/ref/settings/
 """
 import os
+import datetime
 
 from pathlib import Path
 from os.path import join, dirname
@@ -45,6 +46,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'api',
     'djangoSketch',
+    'rest_framework.authtoken'
 ]
 
 MIDDLEWARE = [
@@ -55,7 +57,9 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
     'whitenoise.middleware.WhiteNoiseMiddleware',
+    
 ]
 
 ROOT_URLCONF = 'server.urls'
@@ -84,70 +88,72 @@ WSGI_APPLICATION = 'server.wsgi.application'
 # https://docs.djangoproject.com/en/4.0/ref/settings/#databases
 
 #  開発環境
-# dotenv_path = join(dirname(__file__), '../.env')
-# load_dotenv(dotenv_path)
-# DB_NAME = os.environ.get("DB_NAME")
-# DB_PWD = os.environ.get("DB_PWD")
-# DB_USER = os.environ.get("DB_USER")
-# DB_HOST = os.environ.get("DB_HOST")
-# DB_PORT = os.environ.get("DB_PORT")
+dotenv_path = join(dirname(__file__), '../.env')
+load_dotenv(dotenv_path)
+DB_NAME = os.environ.get("DB_NAME")
+DB_PWD = os.environ.get("DB_PWD")
+DB_USER = os.environ.get("DB_USER")
+DB_HOST = os.environ.get("DB_HOST")
+DB_PORT = os.environ.get("DB_PORT")
 
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.mysql',
-#         'NAME': DB_NAME,
-#         'USER': DB_USER,
-#         'PASSWORD': DB_PWD,
-#         'HOST': DB_HOST,
-#         'PORT': DB_PORT,
-#         'OPTIONS': {
-#             'init_command': "SET sql_mode='STRICT_TRANS_TABLES'",
-#         },
-#     }
-# }
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': DB_NAME,
+        'USER': DB_USER,
+        'PASSWORD': DB_PWD,
+        'HOST': DB_HOST,
+        'PORT': DB_PORT,
+        'OPTIONS': {
+            'init_command': "SET sql_mode='STRICT_TRANS_TABLES'",
+        },
+    }
+}
 
 # 本番環境
-import os
-import sys
-import urllib.parse
+# import os
+# import sys
+# import urllib.parse
 
-# Register database schemes in URLs.
-urllib.parse.uses_netloc.append('mysql')
+# # Register database schemes in URLs.
+# urllib.parse.uses_netloc.append('mysql')
 
-try:
+# try:
 
-    # Check to make sure DATABASES is set in settings.py file.
-    # If not default to {}
+#     # Check to make sure DATABASES is set in settings.py file.
+#     # If not default to {}
 
-    if 'DATABASES' not in locals():
-        DATABASES = {}
+#     if 'DATABASES' not in locals():
+#         DATABASES = {}
 
-    if 'DATABASE_URL' in os.environ:
-        url = urllib.parse.urlparse(os.environ['DATABASE_URL'])
+#     if 'DATABASE_URL' in os.environ:
+#         url = urllib.parse.urlparse(os.environ['DATABASE_URL'])
 
-        # Ensure default database exists.
-        DATABASES['default'] = DATABASES.get('default', {})
+#         # Ensure default database exists.
+#         DATABASES['default'] = DATABASES.get('default', {})
 
-        # Update with environment configuration.
-        DATABASES['default'].update({
-            'NAME': url.path[1:],
-            'USER': url.username,
-            'PASSWORD': url.password,
-            'HOST': url.hostname,
-            'PORT': url.port,
-        })
+#         # Update with environment configuration.
+#         DATABASES['default'].update({
+#             'NAME': url.path[1:],
+#             'USER': url.username,
+#             'PASSWORD': url.password,
+#             'HOST': url.hostname,
+#             'PORT': url.port,
+#         })
 
 
-        if url.scheme == 'mysql':
-            DATABASES['default']['ENGINE'] = 'django.db.backends.mysql'
-except Exception:
-    print('Unexpected error:', sys.exc_info())
+#         if url.scheme == 'mysql':
+#             DATABASES['default']['ENGINE'] = 'django.db.backends.mysql'
+# except Exception:
+#     print('Unexpected error:', sys.exc_info())
 
 
 
 
 # Password validation
 # https://docs.djangoproject.com/en/4.0/ref/settings/#auth-password-validators
+
+AUTH_USER_MODEL = 'djangoSketch.SketchUser'
 
 AUTH_PASSWORD_VALIDATORS = [
     {
@@ -196,6 +202,31 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 #Authentication
 LOGIN_REDIRECT_URL = '/'    #追加
 LOGOUT_REDIRECT_URO = 'rest_framework.login' #追加
+REST_FRAMEWORK = {
+    # Use Django's standard `django.contrib.auth` permissions,
+    # or allow read-only access for unauthenticated users.
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly'
+    ],
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework_jwt.authentication.JSONWebTokenAuthentication',
+        'rest_framework.authentication.SessionAuthentication',
+        'rest_framework.authentication.BasicAuthentication',
+    ),
+}
+
+JWT_AUTH = {
+    'JWT_VERIFY': True,
+    'JWT_VERIFY_EXPIRATION': True,
+    'JWT_LEEWAY': 0,
+    'JWT_EXPIRATION_DELTA': datetime.timedelta(seconds=86400),
+    'JWT_ALLOW_REFRESH': True,
+    'JWT_REFRESH_EXPIRATION_DELTA': datetime.timedelta(days=7),
+}
+
+CORS_ORIGIN_WHITELIST = (
+    'http://localhost:8080',
+)
 
 import django_heroku
 django_heroku.settings(locals())
