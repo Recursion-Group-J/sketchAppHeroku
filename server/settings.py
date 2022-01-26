@@ -42,6 +42,9 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'rest_framework',
+    'api',
+    'djangoSketch',
 ]
 
 MIDDLEWARE = [
@@ -189,6 +192,10 @@ STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+#Authentication
+LOGIN_REDIRECT_URL = '/'    #追加
+LOGOUT_REDIRECT_URO = 'rest_framework.login' #追加
 
 import django_heroku
 django_heroku.settings(locals())
