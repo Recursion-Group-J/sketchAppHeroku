@@ -55,13 +55,14 @@ class SketchUser(AbstractBaseUser, PermissionsMixin):
         return self.username
 
 
-class Works(models.Model):
+class Work(models.Model):
     uuid = models.UUIDField(
         default=uuid_lib.uuid4,
         primary_key=True,
         editable=False
     )
     name = models.CharField(max_length=100)
+    work = models.JSONField(blank=True, null=True)
     user = models.ForeignKey(SketchUser, on_delete=models.CASCADE)
  
     def __str__(self):
