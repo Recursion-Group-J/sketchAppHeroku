@@ -2,3 +2,4 @@
 myvenv
 staticfiles 
 env
+__pycache__/
