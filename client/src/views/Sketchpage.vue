@@ -1,15 +1,30 @@
 <template>
-    <div class="wh-100">
-        <div id="tokoron-container">
-            <img id="tokoron-image" src="http://www.city.tokorozawa.saitama.jp/other/tokoron_gazou/jpeg/asobu.jpg" alt="">
-        </div>
-        <div id="sketchBoard" class="h-75 w-75 d-flex flex-wrap justify-content-center">
+    <div id="all-container" class="vh-100">
+        <div id="upper-container" class="col-12 d-flex py-2">
+            <div id="buuton-container" class="col-2 d-flex">
+                <div class="mx-3">
+                    <button class="btn btn-lg">Save</button>
+                </div>
+                <div class="mx-3">
+                    <button class="btn btn-lg">Load</button>
+                </div>
+                
+             </div>
+             <div class="offset-md-1">
+                <h2 class="mb-0">How to etch a sketch <span>s:← d:→ k:↑ l:↓</span></h2>
+
+             </div>
+            <div id="tokoron-container">
+                <img id="tokoron-image" src="http://www.city.tokorozawa.saitama.jp/other/tokoron_gazou/jpeg/asobu.jpg" alt="">
+            </div>
+        </div>   
+        <div id="sketch-board" class="h-75 w-75 d-flex flex-wrap justify-content-center">
             <h1 class="col-12 my-3">Etch a sketch</h1>
-            <div id="innerFrame" class="h-75 w-75" >
+            <div id="inner-frame" class="h-75 w-75" >
                 <Sketch></Sketch>
             </div> 
-            <div id="leftControl" class="h-10 w-10"></div>
-            <div id="rightControl" class="h-10 w-10"></div>
+            <div id="left-control" class="h-10 w-10"></div>
+            <div id="right-control" class="h-10 w-10"></div>
         </div>
     </div>
 </template>
@@ -27,42 +42,50 @@ export default {
 
 <style scoped>
 @import url('https://fonts.googleapis.com/css2?family=Indie+Flower&display=swap');
-h1 {
+h1,h2 {
     font-family: 'Indie Flower', cursive;
-    font-size: 3rem;
+}
+h1 {
     color: #dab300;
+    font-size: 4rem;
 }
-#sketchBoard {
-  position: fixed;
-  left: 50%;
-  top: 50%;
-  transform: translateX(-50%)
-             translateY(-50%);
- box-shadow: 10px 10px 10px rgba(0,0,0,0.6);
- border-radius: 1rem;
+h2 {
+    font-size: 3rem;
+}
 
- background-color: red;
+#all-container{
+    background-image: url(https://cdn.pixabay.com/photo/2016/01/25/18/21/wood-1161204_960_720.jpg);
 }
-#innerFrame {
+#sketch-board {
+  position: fixed;
+  left: 50%;
+  top: 50%;
+  transform: translateX(-50%)
+             translateY(-50%);
+border-radius: 50px;
+background-color: #FF101F;
+box-shadow:  10px 10px 10px rgba(0,0,0,0.6);
+}
+#inner-frame {
   position: fixed;
   left: 50%;
   top: 50%;
   transform: translateX(-50%)
              translateY(-50%);
 }
-#leftControl, #rightControl {
+#left-control, #right-control {
     width : 75px;
     height: 75px;
     border-radius: 50%;
     background-color: beige;
     box-shadow: 10px 10px 10px rgba(0,0,0,0.6);
 }
-#leftControl {
+#left-control {
   position: fixed;
   left: 3%;
   top: 85%;
 }
-#rightControl {
+#right-control {
   position: fixed;
   right: 3%;
   top: 85%;
@@ -77,6 +100,15 @@ h1 {
 #tokoron-image{
     max-height: 150px;
     width: auto;
+}
+button:hover {
+    background-color: darkgrey;
+    border: none;
+    color: white;
+}
+button {
+    background-color: lightgrey;
+    border: none;
 }
 
 
