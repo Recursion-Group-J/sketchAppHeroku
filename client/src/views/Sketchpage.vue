@@ -42,9 +42,6 @@ export default {
 
 <style scoped>
 @import url('https://fonts.googleapis.com/css2?family=Indie+Flower&display=swap');
-h1,h2 {
-    font-family: 'Indie Flower', cursive;
-}
 h1 {
     color: #dab300;
     font-size: 4rem;
@@ -54,6 +51,7 @@ h2 {
 }
 
 #all-container{
+    font-family: 'Indie Flower', cursive;
     background-image: url(https://cdn.pixabay.com/photo/2016/01/25/18/21/wood-1161204_960_720.jpg);
 }
 #sketch-board {
