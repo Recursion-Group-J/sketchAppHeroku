@@ -62,7 +62,7 @@ class Work(models.Model):
         editable=False
     )
     name = models.CharField(max_length=100)
-    work = models.JSONField(blank=True, null=True)
+    # work = models.JSONField(blank=True, null=True)
     user = models.ForeignKey(SketchUser, on_delete=models.CASCADE)
  
     def __str__(self):
