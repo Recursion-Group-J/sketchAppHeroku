@@ -139,7 +139,7 @@ try:
             'HOST': url.hostname,
             'PORT': url.port,
             'OPTIONS': {
-                'init_command': "SET sql_mode='ANSI'",
+                'init_command': "SET sql_mode='STRICT_TRANS_TABLES'",
             },
         })
 
