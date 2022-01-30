@@ -66,4 +66,4 @@ class Work(models.Model):
     user = models.ForeignKey(SketchUser, on_delete=models.CASCADE)
  
     def __str__(self):
-        return self.name + ' ' + self.user.name
+        return self.name + ' ' + self.user.username
