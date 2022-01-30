@@ -45,7 +45,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'rest_framework',
     'api',
-    'rest_framework.authtoken'
+    'rest_framework.authtoken',
 ]
 
 MIDDLEWARE = [
@@ -87,64 +87,67 @@ WSGI_APPLICATION = 'server.wsgi.application'
 # https://docs.djangoproject.com/en/4.0/ref/settings/#databases
 
 #  開発環境
-dotenv_path = join(dirname(__file__), '../.env')
-load_dotenv(dotenv_path)
-DB_NAME = os.environ.get("DB_NAME")
-DB_PWD = os.environ.get("DB_PWD")
-DB_USER = os.environ.get("DB_USER")
-DB_HOST = os.environ.get("DB_HOST")
-DB_PORT = os.environ.get("DB_PORT")
+# dotenv_path = join(dirname(__file__), '../.env')
+# load_dotenv(dotenv_path)
+# DB_NAME = os.environ.get("DB_NAME")
+# DB_PWD = os.environ.get("DB_PWD")
+# DB_USER = os.environ.get("DB_USER")
+# DB_HOST = os.environ.get("DB_HOST")
+# DB_PORT = os.environ.get("DB_PORT")
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': DB_NAME,
-        'USER': DB_USER,
-        'PASSWORD': DB_PWD,
-        'HOST': DB_HOST,
-        'PORT': DB_PORT,
-        'OPTIONS': {
-            'init_command': "SET sql_mode='STRICT_TRANS_TABLES'",
-        },
-    }
-}
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.mysql',
+#         'NAME': DB_NAME,
+#         'USER': DB_USER,
+#         'PASSWORD': DB_PWD,
+#         'HOST': DB_HOST,
+#         'PORT': DB_PORT,
+#         'OPTIONS': {
+#             'init_command': "SET sql_mode='STRICT_TRANS_TABLES'",
+#         },
+#     }
+# }
 
 # 本番環境
-# import os
-# import sys
-# import urllib.parse
+import os
+import sys
+import urllib.parse
 
-# # Register database schemes in URLs.
-# urllib.parse.uses_netloc.append('mysql')
+# Register database schemes in URLs.
+urllib.parse.uses_netloc.append('mysql')
 
-# try:
+try:
 
-#     # Check to make sure DATABASES is set in settings.py file.
-#     # If not default to {}
+    # Check to make sure DATABASES is set in settings.py file.
+    # If not default to {}
 
-#     if 'DATABASES' not in locals():
-#         DATABASES = {}
+    if 'DATABASES' not in locals():
+        DATABASES = {}
 
-#     if 'DATABASE_URL' in os.environ:
-#         url = urllib.parse.urlparse(os.environ['DATABASE_URL'])
+    if 'DATABASE_URL' in os.environ:
+        url = urllib.parse.urlparse(os.environ['DATABASE_URL'])
 
-#         # Ensure default database exists.
-#         DATABASES['default'] = DATABASES.get('default', {})
+        # Ensure default database exists.
+        DATABASES['default'] = DATABASES.get('default', {})
 
-#         # Update with environment configuration.
-#         DATABASES['default'].update({
-#             'NAME': url.path[1:],
-#             'USER': url.username,
-#             'PASSWORD': url.password,
-#             'HOST': url.hostname,
-#             'PORT': url.port,
-#         })
+        # Update with environment configuration.
+        DATABASES['default'].update({
+            'NAME': url.path[1:],
+            'USER': url.username,
+            'PASSWORD': url.password,
+            'HOST': url.hostname,
+            'PORT': url.port,
+            'OPTIONS': {
+                'init_command': "SET sql_mode='STRICT_TRANS_TABLES'",
+            },
+        })
 
 
-#         if url.scheme == 'mysql':
-#             DATABASES['default']['ENGINE'] = 'django.db.backends.mysql'
-# except Exception:
-#     print('Unexpected error:', sys.exc_info())
+        if url.scheme == 'mysql':
+            DATABASES['default']['ENGINE'] = 'django.db.backends.mysql'
+except Exception:
+    print('Unexpected error:', sys.exc_info())
 
 
 
@@ -229,3 +232,4 @@ CORS_ORIGIN_WHITELIST = (
 
 import django_heroku
 django_heroku.settings(locals())
+del DATABASES['default']['OPTIONS']['sslmode']
