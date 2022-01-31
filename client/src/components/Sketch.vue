@@ -1,6 +1,5 @@
 <template>
     <div class="h-100 w-100">
-      <p>s:← d:→ k:↑ l:↓ </p>
       <div id="canvas-container" class="h-100 w-100">
       </div>
     </div>
