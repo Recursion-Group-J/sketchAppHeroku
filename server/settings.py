@@ -45,7 +45,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'rest_framework',
     'api',
-    'rest_framework.authtoken'
+    'rest_framework.authtoken',
 ]
 
 MIDDLEWARE = [
@@ -138,6 +138,9 @@ DATABASES = {
 #             'PASSWORD': url.password,
 #             'HOST': url.hostname,
 #             'PORT': url.port,
+#             'OPTIONS': {
+#                 'init_command': "SET sql_mode='STRICT_TRANS_TABLES'",
+#             },
 #         })
 
 
@@ -229,3 +232,4 @@ CORS_ORIGIN_WHITELIST = (
 
 import django_heroku
 django_heroku.settings(locals())
+# del DATABASES['default']['OPTIONS']['sslmode']
