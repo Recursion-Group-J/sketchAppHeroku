@@ -63,7 +63,7 @@ export default {
           var line = new Konva.Line({
                   points: [this.xpos, this.ypos, this.xpos+ajstX, this.ypos+ajstY],
                   stroke: '#696969',
-                  strokeWidth: 3,
+                  strokeWidth: 6,
                   lineCap: 'round',
                   lineJoin: 'round',
               })
