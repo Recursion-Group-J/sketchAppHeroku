@@ -71,6 +71,7 @@ export default {
       else if (event.key === 's') {ajstX = -5, ajstY = 0;}
       else if (event.key === 'd') {ajstX = 5; ajstY = 0}
 
+
       if(this.xpos+ajstX >= 0 && this.xpos+ajstX <= frame.offsetWidth && this.ypos+ajstY >= 0 && this.ypos+ajstY <= frame.offsetHeight) {
       //     var line = new Konva.Line({
       //             points: [this.xpos, this.ypos, this.xpos+ajstX, this.ypos+ajstY],
@@ -79,6 +80,7 @@ export default {
       //             lineCap: 'round',
       //             lineJoin: 'round',
       //         })
+
         this.xpos = this.xpos + ajstX;
         this.ypos = this.ypos + ajstY;
         this.line.points(this.line.points().concat([this.xpos, this.ypos]));  
