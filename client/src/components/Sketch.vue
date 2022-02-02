@@ -7,7 +7,7 @@
 </template>
 
 <script>
-import Konva from 'konva'
+import Konva from 'konva';
 
 export default {
   name: 'Sketch',
@@ -51,7 +51,7 @@ export default {
     var line = new Konva.Line({
                   points: [],
                   stroke: '#696969',
-                  strokeWidth: 5,
+                  strokeWidth: 6,
                   lineCap: 'round',
                   lineJoin: 'round',
               })
