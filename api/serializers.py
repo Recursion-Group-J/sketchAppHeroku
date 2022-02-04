@@ -6,7 +6,7 @@ class WorkSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Work
-        fields = ['uuid','name','work','user']
+        fields = ['name','work','user']
 
 class SketchUserSerializer(serializers.ModelSerializer):
     class Meta:

@@ -7,7 +7,7 @@
 </template>
 
 <script>
-import Konva from 'konva'
+import Konva from 'konva';
 
 export default {
   name: 'Sketch',

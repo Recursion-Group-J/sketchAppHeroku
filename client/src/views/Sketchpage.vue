@@ -3,7 +3,7 @@
         <div id="upper-container" class="col-12 d-flex py-2">
             <div id="buuton-container" class="col-2 d-flex">
                 <div class="mx-3">
-                    <button class="btn btn-lg">Save</button>
+                    <button @click.prevent="saveWork" class="btn btn-lg">Save</button>
                 </div>
                 <div class="mx-3">
                     <button class="btn btn-lg">Load</button>
@@ -30,12 +30,37 @@
 </template>
 
 <script>
-import Sketch from '@/components/Sketch.vue'
+import Sketch from '@/components/Sketch.vue';
+// import apiService from '../util/api.service';
+import { csrftoken } from "../util/csrftoken.js";
+
 
 export default {
     name: 'Sketchpage',
     components: {
         Sketch
+    },
+    methods:{
+        saveWork: function(){
+            let work = JSON.parse(this.$store.state.work)
+            // let work = this.$store.state.work
+            let data = {name:"test",work:work}
+            console.log(data)
+            console.log("------------")
+            console.log(JSON.stringify(data))
+            console.log(csrftoken)
+            const config = {
+            method: "POST",
+            body: JSON.stringify(data),
+            headers :{
+                "content-type":"application/json",
+                "X-CSRFTOKEN":csrftoken
+                }
+            }
+        fetch('http://127.0.0.1:8000/api/works/', config).then(response => {
+            console.log(response.data);
+        });
+        },
     }
 }
 </script>
