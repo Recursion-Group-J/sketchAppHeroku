@@ -11,4 +11,4 @@ class WorkSerializer(serializers.ModelSerializer):
 class SketchUserSerializer(serializers.ModelSerializer):
     class Meta:
         model = SketchUser
-        fields = ['uuid', 'username']
+        fields = ['username','password']

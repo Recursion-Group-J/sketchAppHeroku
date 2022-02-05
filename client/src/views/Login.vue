@@ -8,14 +8,14 @@
                 <div id="login-container" class="my-3">
                     <h2 class="text-center">Login</h2>
                 </div>
-                <form action="" class="col-12 my-3 px-0">
+                <form @submit.prevent="submitLogin" class="col-12 my-3 px-0">
                     <table class="col-12">
                         <tr>
                             <td class="text-right" nowrap="nowrap">
-                                <label for="id">Your Id :</label>
+                                <label for="user-name">User Name :</label>
                             </td>
                             <td>
-                                <input class="col-12" type="text" id="id" name="id">
+                                <input class="col-12" type="text" id="user-name" name="user-name" required>
                             </td>
                         </tr>
                         <tr>
@@ -23,7 +23,7 @@
                                 <label for="password">Password :</label>
                             </td>
                             <td>
-                                <input class="col-12" type="password" id="password" name="password">
+                                <input class="col-12" type="password" id="password" name="password" required>
                             </td>
                         </tr>
                     </table>
@@ -47,6 +47,28 @@
 <script>
 export default {
   name: 'Login',
+  data(){
+      return  {
+          form : {
+              username : "",
+              password : ""
+          }
+      };
+  },
+  methods : {
+      submitLogin : function (){
+          this.$store
+            .dispatch("auth/login", {
+                username : this.form.username,
+                password : this.form.password
+            })
+            .then( ()=> {
+                console.log("Login succedes");
+                const next = this.$route.query.next || "/";
+                this.$router.replace(next);
+            })
+      }
+  }
 
 }
 </script>
