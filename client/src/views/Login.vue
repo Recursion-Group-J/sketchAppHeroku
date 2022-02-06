@@ -15,7 +15,7 @@
                                 <label for="user-name">User Name :</label>
                             </td>
                             <td>
-                                <input class="col-12" type="text" id="user-name" name="user-name" required>
+                                <input v-model="form.username" class="col-12" type="text" id="user-name" name="user-name" required>
                             </td>
                         </tr>
                         <tr>
@@ -23,7 +23,7 @@
                                 <label for="password">Password :</label>
                             </td>
                             <td>
-                                <input class="col-12" type="password" id="password" name="password" required>
+                                <input v-model="form.password" class="col-12" type="password" id="password" name="password" required>
                             </td>
                         </tr>
                     </table>

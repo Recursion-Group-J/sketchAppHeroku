@@ -1,6 +1,6 @@
 from django.http import HttpResponse, QueryDict
 from django.shortcuts import render
-from rest_framework import viewsets,views, status
+from rest_framework import viewsets,views, status, generics
 from rest_framework.response import Response
 
 from rest_framework.permissions import IsAuthenticatedOrReadOnly, AllowAny
@@ -25,6 +25,18 @@ class WorkView(views.APIView):
         serializer.save()
         return Response(serializer.data, status.HTTP_201_CREATED)
 
+
+class UserRegisterView(generics.CreateAPIView):
+# class UserRegisterView(views.APIView):
+    permission_classes = (AllowAny,)
+
+    def post(self, request, *args, **kwargs):
+        serializer = SketchUserSerializer(data=request.data)
+        print("user serializer test")
+
+        serializer.is_valid(raise_exception=True)
+        serializer.save()
+        return Response(serializer.data,status.HTTP_201_CREATED)
 
 
 class SketchUserViewSet(viewsets.ModelViewSet):

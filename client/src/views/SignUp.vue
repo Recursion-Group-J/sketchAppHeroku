@@ -8,22 +8,14 @@
                 <div id="login-container" class="my-3">
                     <h2 class="text-center">Sign Up</h2>
                 </div>
-                <form action="" class="col-12 my-3 px-0">
+                <form  @submit.prevent="submitSignUp" class="col-12 my-3 px-0">
                     <table class="col-12">
                         <tr>
                             <td class="text-right" nowrap="nowrap">
-                                <label for="id">Your Id :</label>
+                                <label for="user-name">User Name :</label>
                             </td>
                             <td>
-                                <input class="col-12" type="text" id="id" name="id">
-                            </td>
-                        </tr>
-                        <tr>
-                            <td class="text-right" nowrap="nowrap">
-                                <label for="email">E-mail :</label>
-                            </td>
-                            <td>
-                                <input class="col-12" type="email" id="email" name="email">
+                                <input v-model="form.username" class="col-12" type="text" id="user-name" name="user-name">
                             </td>
                         </tr>
                         <tr>
@@ -31,7 +23,7 @@
                                 <label for="password">Password :</label>
                             </td>
                             <td>
-                                <input class="col-12" type="password" id="password" name="password">
+                                <input v-model="form.password" class="col-12" type="password" id="password" name="password">
                             </td>
                         </tr>
                     </table>
@@ -51,6 +43,39 @@
               
     </div>
 </template>
+
+<script>
+export default {
+  name: 'SignUp',
+  data(){
+      return  {
+          form :{
+            username : "",
+            password : "",
+          }
+      };
+  },
+  methods : {
+      submitSignUp : function (){
+          this.$store
+            .dispatch("auth/register", {
+                username : this.form.username,
+                password : this.form.password
+            })
+            .then( (response)=> {
+                console.log(response)
+                console.log("Register succeed");
+                this.$store.dispatch("auth/login",{
+                username : this.form.username,
+                password : this.form.password
+            });
+                // const next = this.$route.query.next || "/";
+                // this.$router.replace(next);
+            })
+        }
+    }
+}
+</script>
 
 <style scoped>
     #login-modal {

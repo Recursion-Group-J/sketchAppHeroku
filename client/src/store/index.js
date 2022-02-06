@@ -18,31 +18,40 @@ const authModule = {
     }
   },
   actions : {
-    login(context,payload) {
+    async login(context,payload) {
       let data = {
       username: payload.username,
       password: payload.password
       };
       console.log(JSON.stringify(data))
-      return apiService("http://127.0.0.1:8000/api/auth/jwt/create/","POST",JSON.stringify(data))
-      .then(response => {
-        console.log(response)
-        localStorage.setItem("access",response.data.access);
-        return context.dispatch("renew");
-      });
+      let response = await apiService("http://127.0.0.1:8000/api/auth/jwt/create/","POST",data);
+      console.log(response)
+      localStorage.setItem("access",response.access);
+      return context.dispatch("renew");
     },
     logout(context){
       localStorage.removeItem("access");
       context.commit("clear");
     },
-    renew(context){
-      return apiService("http://127.0.0.1:8000/api/auth/users/me/","GET").then(response => {
-        const user = response.data;
-        context.commit("set",{user: user})
-      });
+    async renew(context){
+      let response = await apiService("http://127.0.0.1:8000/api/auth/users/me/","GET");
+      console.log(response);
+      const user = response; 
+      console.log(user);
+      console.log(user.username);
+      context.commit("set",{user: user})
+    },
+    async register(context,payload) {
+      console.log("payload ",payload)
+      let data = {
+        username : payload.username,
+        password : payload.password
+      }
+      let response = await apiService("http://127.0.0.1:8000/api/user/register/","POST",data);
+      console.log(response)
     }
   }
-};
+}
 
 const workModule = {
   state: {
