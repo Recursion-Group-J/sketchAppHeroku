@@ -6,12 +6,13 @@ from django.contrib.auth.validators import UnicodeUsernameValidator
 import uuid as uuid_lib
 
 # Create your models here.
-class UserManager(BaseUserManager):
-    def create_user(self, userId, password=None):
+class UserManager(BaseUserManager): 
+    def create_user(self, username, password=None):
         user = self.model(
-            username=userId,
+            username=username,
         )
         user.set_password(password)
+        user.is_active = True
         user.save(using=self._db)
         return user
 
@@ -27,7 +28,7 @@ class UserManager(BaseUserManager):
         return user
 
 class SketchUser(AbstractBaseUser, PermissionsMixin):
-    uuid = models.UUIDField(
+    id = models.UUIDField(
         default=uuid_lib.uuid4,
         primary_key=True,
         editable=False
@@ -63,7 +64,8 @@ class Work(models.Model):
     )
     name = models.CharField(max_length=100)
     work = models.JSONField(blank=True, null=True)
-    user = models.ForeignKey(SketchUser, on_delete=models.CASCADE)
+    #一旦テスト用に除く
+    # user = models.ForeignKey(SketchUser, on_delete=models.CASCADE)
  
-    def __str__(self):
-        return self.name + ' ' + self.user.username
+    # def __str__(self):
+    #     return self.name + ' ' + self.user.username

@@ -10,6 +10,7 @@ router.register('sketchusers', views.SketchUserViewSet)
 urlpatterns = [
     path('works/',views.WorkView.as_view()),
     path('works',views.WorkView.as_view()),
-    path('', include(router.urls)),
+    path('user/register/',views.UserRegisterView.as_view()),
+    # path('', include(router.urls)),
 ]
 

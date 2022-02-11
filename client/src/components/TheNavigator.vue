@@ -13,12 +13,44 @@
          <router-link class="nav-link" to="/sketch">Sketch</router-link>        
       </li>
     </ul>
-    <ul class="navbar-nav ml-auto">
-        <li class="nav-item"><router-link to="/login" class="nav-link">Login</router-link></li>
-</ul>
+    <ul v-if="isLoggedin" class="navbar-nav ml-auto">
+        <li  class="nav-item"><router-link to="/login" class="nav-link">Login</router-link></li>
+      
+    </ul>
+    <ul v-else class="navbar-nav ml-auto">
+        <li  class="nav-item"><a href="#"> Welcome!! {{username}} </a></li>
+        <li  class="nav-item"><router-link @click="logout" to="/" class="nav-link">Logout</router-link></li>
+    </ul>
   </div>
 </nav>
 </template>
+
+<script>
+export default {
+  name: 'NavigationBar',
+  data(){
+      return  {
+          
+      };
+  },
+  computed : {
+      isLoggedin : function (){
+          return !this.$store.state.auth.isLoggedIn;
+      },
+      username : function(){
+          console.log(this.$store.state.auth.username);
+          return this.$store.state.auth.username;
+      }
+  },
+  methods : {
+      logout : function(){
+          this.$store.dispatch("auth/logout");
+      }
+  }
+
+}
+</script>
+
 
 <style scoped>
  nav{
